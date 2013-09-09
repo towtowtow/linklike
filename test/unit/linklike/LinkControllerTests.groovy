@@ -13,43 +13,95 @@ import org.junit.*
 class LinkControllerTests {
 
 	 void testCreateNewLink() 
-	{
-    	params.title = "Facebook"
-    	params.url = "www.facebook.com"
-    	controller.create()
-    	
-    	assertEquals 1,Link.count()
+    {
+        params.title = "Facebook"
+        params.url = "www.facebook.com"
+        controller.create()
+        
+        assertEquals 1,Link.count()
     }
+
+
 
      void testCreateNewLink2() 
      {
-    	def link = new Link(title: "Facebook", url: "www.facebook.com")
-    	link.save()
-    	assertEquals 1,Link.count()
+        def link = new Link(title: "Facebook", url: "www.facebook.com")
+        link.save()
+        assertEquals 1,Link.count()
 
-    	link = new Link(title: "Google", url: "www.google.com")
-    	link.save()
-    	assertEquals 2,Link.count()
+        link = new Link(title: "Google", url: "www.google.com")
+        link.save()
+        assertEquals 2,Link.count()
 
-    	link = new Link(title: "Yahoo", url: "www.yahoo.com")
-    	link.save()
-    	assertEquals 3,Link.count()
+        link = new Link(title: "Yahoo", url: "www.yahoo.com")
+        link.save()
+        assertEquals 3,Link.count()
     }
 
-    void testVoteLink()
+    void testLikeLink()
     {
-    	def link = new Link(title: "Facebook", url: "www.facebook.com")
+        def link = new Link(title: "Facebook", url: "www.facebook.com")
         link.save()
         params.id = 1
-    	controller.voteLink()
+        controller.LikeLink()
 
-    	link = new Link(title: "Google", url: "www.google.com")
+        link = new Link(title: "Google", url: "www.google.com")
         link.save()
         params.id = 2
 
-    	assertEquals 1, Link.get(1).voteNumber
-    	assertEquals 0, Link.get(2).voteNumber
+        assertEquals 1, Link.get(1).LikeNumber
+        assertEquals 0, Link.get(2).LikeNumber
 
+    }
+
+    void testDisLikeLink()
+    {
+        def link = new Link(title: "Facebook", url: "www.facebook.com")
+        link.save()
+        params.id = 1
+        controller.DislikeLink()
+
+        link = new Link(title: "Google", url: "www.google.com")
+        link.save()
+        params.id = 2
+
+        assertEquals 1, Link.get(1).DisLikeNumber
+        assertEquals 0, Link.get(2).DisLikeNumber
+
+    }
+
+    void testNameEdit()
+    {
+        def link = new Link(title: "Facebook", url: "www.facebook.com")
+        link.save()
+        params.id = link.id
+        params.title = "test"
+        controller.nameEdit()
+
+
+        assert link.title != "Facebook"
+        assert link.title == "test"
+
+    }
+
+     void testDeleteLink() 
+    {
+        def link = new Link(title: "Facebook", url: "www.facebook.com")
+        link.save()
+        params.id = 1
+
+        link = new Link(title: "Google", url: "www.google.com")
+        link.save()
+        params.id = 2
+
+        controller.deleteTable()
+
+        assertEquals 1,Link.count()
+
+       
+
+        
+       
     }
 
      

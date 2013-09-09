@@ -9,25 +9,35 @@ import org.junit.*
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
 @TestFor(Link)
+@Mock([Link])
 class LinkTests {
 
-    void testCreateNewLink()
-    {
-    	def link = new Link(title: "Facebook", url: "www.facebook.com")
-    	assert link != null
+    void testCreateLink()
+    {       
+
+        def links = new Link(title: "google", url:"google.com")
+
+        assert links != null
     }
 
-    void testVoteLink()
-    {
-    	def link = new Link(title: "Facebook", url: "www.facebook.com")
-    	assertEquals 0,link.voteNumber
+    void testLikeIncrease(){
+        def link = new Link(LikeNumber: 0)
+        link.save()
+        assert link.LikeNumber == 0
 
-    	link.voteNumber++
-    	assertEquals 1,link.voteNumber
-    	link.voteNumber = link.voteNumber+20
-    	assertEquals 21,link.voteNumber
-    	link.voteNumber--
-    	assertEquals 20, link.voteNumber
+        link.LikeNumber++
+        
+        assert link.LikeNumber == 1
+    }
+
+    void testDisLikeIncrease(){
+        def link = new Link(DisLikeNumber: 0)
+        link.save()
+        assert link.DisLikeNumber == 0
+
+        link.DisLikeNumber++
+        
+        assert link.DisLikeNumber == 1
     }
 
 }

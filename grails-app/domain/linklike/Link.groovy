@@ -3,9 +3,10 @@ package linklike
 class Link {
     String title
     String url
-    Integer voteNumber = 0
-    
-    
+    Integer LikeNumber = 0
+    Integer DisLikeNumber = 0
+    static hasMany = [comment: Comment]
     static constraints = {
+    	
     }
 }
